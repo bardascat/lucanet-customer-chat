@@ -14,9 +14,9 @@ from flask import request
 
 import constants
 from flask import Flask
+from flask import jsonify
 
-
-os.environ["OPENAI_API_KEY"] = "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";
+os.environ["OPENAI_API_KEY"] = "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";
 
 
 # Enable to save to disk & reuse the model (for repeated queries on the same data)
@@ -45,8 +45,6 @@ chain = ConversationalRetrievalChain.from_llm(
 
 
 
-
-
 app = Flask(__name__)
 
 @app.route("/")
@@ -64,4 +62,7 @@ def chat():
   print(result)
   chat_history.append((prompt, result['answer']))
 
-  return result['answer']
+  return jsonify(
+        answer=result['answer'],
+        prompt=prompt
+    )
