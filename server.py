@@ -16,7 +16,7 @@ import constants
 from flask import Flask
 from flask import jsonify
 
-os.environ["OPENAI_API_KEY"] = "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";
+os.environ["OPENAI_API_KEY"] = "";
 
 
 # Enable to save to disk & reuse the model (for repeated queries on the same data)
@@ -65,4 +65,13 @@ def chat():
   return jsonify(
         answer=result['answer'],
         prompt=prompt
+    )
+
+@app.route('/clear', methods = ['DELETE'])
+def update_text():
+    global chat_history
+    chat_history = []
+    return jsonify(
+        status="NEW_SESSION"
+        
     )
